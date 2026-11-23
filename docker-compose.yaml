@@ -1,0 +1,39 @@
+services:
+  # database with postgis
+  db:
+    image: postgis/postgis:16-3.4
+    container_name: postgres-postgis
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${DB_PORT:-5433}:5432"
+    volumes:
+      - pgdata_geo:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d dbname"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # spring boot aplication
+  api:
+    build: .
+    container_name: atlas-postgis-spring
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      # the service must be db, not localhost
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+    depends_on:
+      db:
+        condition: service_healthy # run just after the db is ready
+
+volumes:
+  pgdata_geo:
+
