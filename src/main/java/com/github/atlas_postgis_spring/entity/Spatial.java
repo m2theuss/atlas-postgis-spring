@@ -5,7 +5,7 @@ import org.locationtech.jts.geom.*;
 
 @Entity
 @Table(name =  "spatial_types")
-public class SpatialTypes {
+public class Spatial {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int Id;
@@ -17,9 +17,9 @@ public class SpatialTypes {
     private MultiPolygon multiPolygon;
     private GeometryCollection geometryCollection;
 
-    public SpatialTypes(){}
+    public Spatial(){}
     // all-args constructor excluding auto-generated id
-    public SpatialTypes(
+    public Spatial(
             Point point,
             MultiPoint multiPoint,
             LineString lineString,

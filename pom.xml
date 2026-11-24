@@ -64,6 +64,27 @@
 			<groupId>org.hibernate.orm</groupId>
 			<artifactId>hibernate-spatial</artifactId>
 		</dependency>
+		<!-- Builder (automatically includes ugeojson-model) -->
+		<dependency>
+			<groupId>org.ugeojson</groupId>
+			<artifactId>ugeojson-builder</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<!-- Parser (converts GeoJSON strings and JTS/PostGIS geometries) -->
+		<dependency>
+			<groupId>org.ugeojson</groupId>
+			<artifactId>ugeojson-parser</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<!-- Math (geospatial calculations, circles, and arcs) -->
+		<dependency>
+			<groupId>org.ugeojson</groupId>
+			<artifactId>ugeojson-math</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

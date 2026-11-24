@@ -1,10 +1,7 @@
 package com.github.atlas_postgis_spring.init;
 
-import com.github.atlas_postgis_spring.entity.SpatialTypes;
 import com.github.atlas_postgis_spring.repository.SpatialRepository;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.geom.Point;
+import com.github.atlas_postgis_spring.util.SpatialGenerator;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
@@ -22,10 +19,7 @@ public class InitSpatialService implements ApplicationListener<ApplicationReadyE
             System.out.println("Almost have items on database");
             return;
         }
-        var factory = new GeometryFactory();
-        var point = factory.createPoint(new Coordinate(10,10));
-        var f = new SpatialTypes();
-        f.setPoint(point);
-        spatialRepository.save(f);
+        var allTypes = SpatialGenerator.allTypesGenerator();
+        spatialRepository.save(allTypes);
     }
 }

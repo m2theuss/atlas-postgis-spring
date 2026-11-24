@@ -1,27 +1,26 @@
 package com.github.atlas_postgis_spring.controller;
 
-import com.github.atlas_postgis_spring.entity.SpatialTypes;
-import com.github.atlas_postgis_spring.repository.SpatialRepository;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.GeometryFactory;
+import com.github.atlas_postgis_spring.entity.Spatial;
+import com.github.atlas_postgis_spring.service.SpatialService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.locationtech.jts.geom.Point;
+import org.ugeojson.model.geometry.PointDto;
+
 @RestController
-@RequestMapping("api/")
+@RequestMapping("/api/spatials")
 public class SpatialController {
-    private final SpatialRepository spatialRepository;
-    public SpatialController(SpatialRepository repo){
-        spatialRepository = repo;
+    private final SpatialService spatialService;
+    public SpatialController(SpatialService spatialService){
+        this.spatialService = spatialService;
     }
-    @GetMapping
-    public String additem(){
-        var factory = new GeometryFactory();
-        var point = factory.createPoint(new Coordinate(10,10));
-        var f = new SpatialTypes();
-        f.setPoint(point);
-        spatialRepository.save(f);
-        return "ok";
+
+    @GetMapping("/{id}")
+    public String addItem(@PathVariable int id){
+        return spatialService.getItemById(id).toString();
     }
 }
